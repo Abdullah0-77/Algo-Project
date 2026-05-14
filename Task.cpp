@@ -34,18 +34,29 @@ void merge(vector<int>& arr, int left, int mid, int right) {
     }
 }
 
-void mergeSort(vector<int>& arr, int left, int right) {
+void mergeSortREC(vector<int>& arr, int left, int right) {
     if (left >= right)
         return;
     int mid = left + (right - left) / 2;
-    mergeSort(arr, left, mid);
-    mergeSort(arr, mid + 1, right);
+    mergeSortREC(arr, left, mid);
+    mergeSortREC(arr, mid + 1, right);
     merge(arr, left, mid, right);
 }
 
+void mergeSortNONREC(vector<int>& arr) {
+    int n = arr.size();
+    for (int currSize = 1; currSize < n; currSize *= 2) {
+        for (int left = 0; left < n - 1; left += 2 * currSize) {
+            int mid = min(left + currSize - 1, n - 1);
+            int right = min(left + 2 * currSize - 1, n - 1);
+            if (mid < right)
+                merge(arr, left, mid, right);
+        }
+    }
+}
 void wiggleSortNONREC(vector<int>& nums) {
     vector<int> sorted = nums;
-    mergeSort(sorted, 0, sorted.size() - 1);
+    mergeSortNONREC(sorted);
 
     int n = nums.size();
 
@@ -82,7 +93,7 @@ void recWiggleSort(vector<int>& nums, vector<int>& sorted,int& left,int& right,i
 
 void wiggleSortREC(vector<int>& nums) {
     vector<int> sorted = nums;
-    mergeSort(sorted, 0, sorted.size() - 1);
+    mergeSortREC(sorted, 0, sorted.size() - 1);
     int n = nums.size();
     int left = (n - 1) / 2;
     int right = n - 1;
