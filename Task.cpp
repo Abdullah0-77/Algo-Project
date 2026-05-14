@@ -1,13 +1,6 @@
 #include <iostream>
 #include <vector>
-#include <algorithm>
 using namespace std;
-
-void swapValues(int& a, int& b) {
-    int temp = a;
-    a = b;
-    b = temp;
-}
 
 void merge(vector<int>& arr, int left, int mid, int right) {
     int n1 = mid - left + 1;
@@ -72,11 +65,7 @@ void wiggleSortNONREC(vector<int>& nums) {
     }
 }
 
-void recWiggleSort(vector<int>& nums,
-                   vector<int>& sorted,
-                   int& left,
-                   int& right,
-                   int i) {
+void recWiggleSort(vector<int>& nums, vector<int>& sorted,int& left,int& right,int i) {
 
     if (i == nums.size())
         return;
@@ -101,17 +90,23 @@ void wiggleSortREC(vector<int>& nums) {
 }
 
 
-
-
 int main() {
     vector<int> nums;
     int n;
     cout << "Enter the number of elements: ";
     cin >> n;
+    if (n < 1 || n > 50000) {
+        cout << "Invalid input! Number of elements must be between 1 and 50000.";
+        return 0;
+    }
     cout << "Enter the elements: ";
     for (int i = 0; i < n; ++i) {
         int num;
         cin >> num;
+        if (num < 0 || num > 5000) {
+            cout << "Invalid input! Elements must be between 0 and 5000.";
+            return 0;
+        }
         nums.push_back(num);
     }
     vector<int> nums2 = nums;
